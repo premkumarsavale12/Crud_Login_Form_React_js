@@ -1,0 +1,11 @@
+html, body, #root { height: 100%; margin: 0; font-family: Arial, Helvetica, sans-serif }
+.container { max-width: 900px; margin: 24px auto; padding: 16px }
+.card { border: 1px solid #ddd; padding: 16px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.04) }
+input, textarea, select { padding: 8px; margin-top: 6px; margin-bottom: 12px; width: 100%; box-sizing: border-box }
+label { font-weight: 600 }
+button { padding: 8px 12px; cursor: pointer }
+.table { width: 100%; border-collapse: collapse }
+.table th, .table td { padding: 8px; border: 1px solid #eee }
+.flex { display: flex; gap: 8px }
+.small { font-size: 0.9rem }
+.error { color: #b00020 }
