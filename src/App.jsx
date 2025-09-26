@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Routes, Route, Link, useNavigate } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom'
 import LoginForm from './components/LoginForm'
 import StudentForm from './components/StudentForm'
 import StudentList from './components/StudentList'
@@ -18,20 +18,42 @@ function App() {
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2>Student Management (Encrypted storage demo)</h2>
         <nav>
-          <Link to="/">Login</Link>{' | '}
-          <Link to="/students">Students</Link>{' | '}
-          <Link to="/student/new">Register</Link>
-          {isAuth && (<button onClick={logout} style={{ marginLeft: 8 }}>Logout</button>)}
+          {!isAuth && (
+            <>
+              <Link to="/">Login</Link>{' | '}
+              <Link to="/student/new">Register</Link>
+            </>
+          )}
+          {isAuth && (
+            <>
+              <Link to="/students">Students</Link>{' | '}
+              <button onClick={logout} style={{ marginLeft: 8 }}>Logout</button>
+            </>
+          )}
         </nav>
       </header>
 
       <main style={{ marginTop: 16 }}>
         <div className="card">
           <Routes>
-            <Route path="/" element={<LoginForm onLogin={() => setIsAuth(true)} />} />
-            <Route path="/students" element={<StudentList />} />
-            <Route path="/student/new" element={<StudentForm />} />
-            <Route path="/student/edit/:id" element={<StudentForm />} />
+            {/* Public Routes */}
+            <Route path="/" element={
+              isAuth ? <Navigate to="/students" /> : <LoginForm onLogin={() => setIsAuth(true)} />
+            } />
+            <Route path="/student/new" element={
+              isAuth ? <Navigate to="/students" /> : <StudentForm />
+            } />
+
+            {/* Protected Routes */}
+            <Route path="/students" element={
+              isAuth ? <StudentList /> : <Navigate to="/" />
+            } />
+            <Route path="/student/edit/:id" element={
+              isAuth ? <StudentForm /> : <Navigate to="/" />
+            } />
+
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
       </main>
